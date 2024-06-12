@@ -10,7 +10,8 @@
     "lint": "biome lint",
     "tsc": "tsc --noEmit",
     "dev": "vite",
-    "build": "tsc --build"
+    "build": "vite build",
+    "prepare": "tsc --build"
   },
   "files": [
     "dist"
