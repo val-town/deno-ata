@@ -6,15 +6,16 @@
     "forceConsistentCasingInFileNames": true,
     "inlineSources": true,
     "jsx": "react",
-    "module": "nodenext",
-    "moduleResolution": "nodenext",
+    "module": "esnext",
+    "moduleResolution": "bundler",
     "noUncheckedIndexedAccess": true,
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "sourceMap": true,
     "strict": true,
     "target": "es2022",
-    "rootDir": "./src"
+    "rootDir": "./src",
+    "outDir": "./dist"
   },
-  "exclude": ["./demo"]
+  "exclude": ["./demo", "./dist"]
 }

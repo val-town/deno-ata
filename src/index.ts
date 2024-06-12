@@ -1,9 +1,8 @@
-import { Sentry } from "../sentry.worker";
 import { loadDependency } from "./loadDependency";
 import { extractReferences } from "./extractReferences";
 import { resolveImportSpecifier } from "./resolveSpecifiers";
-import { VirtualTypeScriptEnvironment } from "../vfs/vfs_utils";
-import { urlToFilepath } from "app/lib/tsUrlInterop";
+import type { VirtualTypeScriptEnvironment } from "./vfs_utils";
+import { urlToFilepath } from "./tsUrlInterop";
 
 const NODE_FILE_PATH = "node_types.d.ts";
 const NODE_FILE = `/// <reference types="npm:@types/node@20.11.20" />\n`;
@@ -26,8 +25,8 @@ export function setupTypeAcquisition(
   let downloaded = 0;
 
   // Used for debugging
-  let debugLinks: [string, string][] = [];
-  let debugIds = new Map<string, number>();
+  const debugLinks: [string, string][] = [];
+  const debugIds = new Map<string, number>();
   let debugCounter = 0;
 
   function getDebugId(url: string) {
@@ -56,7 +55,7 @@ ${debugLinks
   .join("\n")}
 `)*/
       } catch (e) {
-        Sentry.captureException(e);
+        console.error(e);
       }
     },
     /**
@@ -102,7 +101,7 @@ ${debugLinks
         if (downloadedPaths.has(resolvedUrl.url)) return;
         downloadedPaths.add(resolvedUrl.url);
         total++;
-        let dep = await loadDependency(resolvedUrl.url);
+        const dep = await loadDependency(resolvedUrl.url);
         downloaded++;
         if (dep === null) {
           console.error(`Failed to get ${importSpecifier}`);

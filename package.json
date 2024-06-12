@@ -1,13 +1,18 @@
 {
   "name": "@valtown/deno-ata",
   "version": "1.0.0",
+  "type": "module",
   "description": "An ATA fork for Deno’s import behavior",
   "main": "index.js",
   "scripts": {
     "test": "vitest run",
     "lint": "biome lint",
-    "tsc": "tsc --noEmit"
+    "tsc": "tsc --noEmit",
+    "build": "tsc --build"
   },
+  "files": [
+    "dist"
+  ],
   "keywords": [
     "typescript",
     "ata",
