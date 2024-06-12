@@ -1,0 +1,27 @@
+{
+  "name": "@valtown/deno-ata",
+  "version": "1.0.0",
+  "description": "An ATA fork for Deno’s import behavior",
+  "main": "index.js",
+  "scripts": {
+    "test": "vitest run",
+    "lint": "biome lint",
+    "tsc": "tsc --noEmit"
+  },
+  "keywords": [
+    "typescript",
+    "ata",
+    "deno"
+  ],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@biomejs/biome": "^1.8.1",
+    "msw": "^2.3.1",
+    "typescript": "^5.4.5",
+    "vitest": "^1.6.0"
+  },
+  "dependencies": {
+    "moize": "^6.1.6"
+  }
+}
