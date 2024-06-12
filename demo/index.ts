@@ -30,7 +30,7 @@ import { setupTypeAcquisition } from "../src/index";
 
   const path = "index.ts";
 
-  let editor = new EditorView({
+  const editor = new EditorView({
     doc: `let hasAnError: string = 10;
 
 function increment(num: number) {

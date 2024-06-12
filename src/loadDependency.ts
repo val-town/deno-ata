@@ -63,6 +63,7 @@ export const loadDependency = async function loadDependency(
     // It'd be nice to use an OPTIONS request here,
     // but we just get the redirect 302, which doesn't include
     // the X-Typescript-Types header.
+    // biome-ignore lint/style/noParameterAssign: legacy code
     url = maybeAddDtsToSkypackUrls(url);
 
     const res = await fetch(url);
