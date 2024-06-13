@@ -38,3 +38,44 @@ if we were to compile it to WASM, it would be tens of megabytes.
 
 We could run the Deno LSP on a server. This would require us to manage a lot of
 extra, sandboxed servers.
+
+## Workflow
+
+Reflects reality on June 13, 2024.
+
+```mermaid
+flowchart TD
+    RECEIVED_FILE
+    ANALYZE_IMPORTS
+    RECEIVED_FILE --> ANALYZE_IMPORTS
+    ANALYZE_IMPORTS --> HAS_NODE_PREFIX
+    HAS_NODE_PREFIX{"has node: prefix"} --> TRIGGER_LOADING_NPM_TYPES
+    TRIGGER_LOADING_NPM_TYPES --> FETCH_URL[loadDependency]
+    ANALYZE_IMPORTS --> HAS_NPM_PREFIX{"has npm: prefix"}
+    ANALYZE_IMPORTS --> HAS_JSR_PREFIX{"has jsr: prefix"}
+    ANALYZE_IMPORTS --> IS_ABSOLUTE_HTTPS_URL{"is absolute url"}
+    ANALYZE_IMPORTS --> IS_RELATIVE_URL{"is relative url"}
+    IS_RELATIVE_URL{"is relative url"} --> RESOLVE_TO_ABSOLUTE_URL
+    RESOLVE_TO_ABSOLUTE_URL --> FETCH_URL
+    HAS_NPM_PREFIX --> REWRITE_TO_ESM
+    HAS_JSR_PREFIX --> REWRITE_TO_ESM
+    IS_ABSOLUTE_HTTPS_URL{"is absolute https url"} --> FETCH_URL
+    REWRITE_TO_ESM --> FETCH_URL
+    FETCH_URL --> IS_VAL_URL
+    IS_VAL_URL{"is val url"} --> FETCH_WITH_BEARER_TOKEN
+    FETCH_URL --> IS_SKYPACK_URL
+    IS_SKYPACK_URL{"is skypack url"} --> ADD_DTS_SUFFIX
+    FETCH_URL --> FETCH
+    ADD_DTS_SUFFIX --> FETCH
+    FETCH --> HAS_X_TYPESCRIPT_TYPES_HEADER{"has x-typescript-types header"}
+    HAS_X_TYPESCRIPT_TYPES_HEADER -->|Fetch types| FETCH
+    FETCH --> IS_TYPES_NODE
+    IS_TYPES_NODE{"is types node"} --> FIX_PROCESS_AND_BUFFER_GLOBALS
+    FIX_PROCESS_AND_BUFFER_GLOBALS --> CREATE_FILE_WITH_FINAL_PATH
+    FETCH --> CREATE_FILE_WITH_FINAL_PATH
+    CREATE_FILE_WITH_FINAL_PATH --> WAS_REDIRECTED{"was redirected"}
+    WAS_REDIRECTED --> CREATE_REDIRECT_FILE
+    CREATE_REDIRECT_FILE --> DONE
+    CREATE_FILE_WITH_FINAL_PATH --> DONE
+    DONE --> RECEIVED_FILE
+```
