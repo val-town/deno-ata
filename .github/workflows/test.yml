@@ -16,9 +16,10 @@ jobs:
         with:
           node-version: 20
 
+      - uses: pnpm/action-setup@v4
       - name: Install dependencies
-        uses: bahmutov/npm-install@v1
+        run: pnpm install
 
-      - run: npm run tsc
-      - run: npm run lint
-      - run: npm run test
+      - run: pnpm tsc
+      - run: pnpm lint
+      - run: pnpm test
