@@ -21,6 +21,7 @@
     "ata",
     "deno"
   ],
+  "packageManager": "pnpm@9",
   "author": "",
   "license": "ISC",
   "devDependencies": {
